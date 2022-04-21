@@ -9,10 +9,11 @@
 // specific language governing permissions and limitations under the License.
 //
 // Author: Michael Schaffner <schaffner@iis.ee.ethz.ch>, ETH Zurich
+//        Davide Schiavone <davide.schiavone@epfl.ch>, EPFL Lausanne
 // Date: 07.03.2019
 // Description: Full crossbar, implemented as logarithmic interconnect.
 
-module xbar #(
+module xbar_varlat #(
   parameter int unsigned NumIn           = 4,    // number of requestors
   parameter int unsigned NumOut          = 4,    // number of targets
   parameter int unsigned ReqDataWidth    = 32,   // word width of data
@@ -54,7 +55,7 @@ logic [NumIn-1:0][NumOut-1:0] ma_gnt, ma_req;
 // instantiate bank address decoder/resp mux for each master
 ////////////////////////////////////////////////////////////////////////
 for (genvar j = 0; unsigned'(j) < NumIn; j++) begin : gen_inputs
-  addr_dec_resp_mux #(
+  addr_dec_resp_mux_varlat #(
     .NumOut        ( NumOut        ),
     .ReqDataWidth  ( ReqDataWidth  ),
     .RespDataWidth ( RespDataWidth ),
@@ -128,4 +129,4 @@ initial begin
 end
 // pragma translate_on
 
-endmodule // xbar
+endmodule // xbar_varlat

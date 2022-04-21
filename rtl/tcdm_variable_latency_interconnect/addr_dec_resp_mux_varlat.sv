@@ -9,10 +9,11 @@
 // specific language governing permissions and limitations under the License.
 //
 // Author: Michael Schaffner <schaffner@iis.ee.ethz.ch>, ETH Zurich
+//        Davide Schiavone <davide.schiavone@epfl.ch>, EPFL Lausanne
 // Date: 06.03.2019
 // Description: address decoder and response mux for full crossbar.
 
-module addr_dec_resp_mux #(
+module addr_dec_resp_mux_varlat #(
     parameter int unsigned NumOut        = 32,
     parameter int unsigned ReqDataWidth  = 32,
     parameter int unsigned RespDataWidth = 32,
@@ -143,4 +144,4 @@ initial begin
 end
 // pragma translate_on
 
-endmodule // addr_dec_resp_mux
+endmodule // addr_dec_resp_mux_varlat
