@@ -27,7 +27,6 @@ module xbar_varlat #(
   // master side
   input  logic [NumIn-1:0]                      req_i,     // request signal
   input  logic [NumIn-1:0][$clog2(NumOut)-1:0]  add_i,     // bank Address
-  input  logic [NumIn-1:0]                      wen_i,     // 1: store, 0: load
   input  logic [NumIn-1:0][ReqDataWidth-1:0]    wdata_i,   // write data
   output logic [NumIn-1:0]                      gnt_o,     // grant (combinationally dependent on req_i and add_i)
   output logic [NumIn-1:0]                      vld_o,     // response valid, also asserted if write responses are enabled
@@ -64,7 +63,6 @@ for (genvar j = 0; unsigned'(j) < NumIn; j++) begin : gen_inputs
     .rst_ni  ( rst_ni     ),
     .req_i   ( req_i[j]   ),
     .add_i   ( add_i[j]   ),
-    .wen_i   ( wen_i[j]   ),
     .data_i  ( wdata_i[j] ),
     .gnt_o   ( gnt_o[j]   ),
     .vld_o   ( vld_o[j]   ),

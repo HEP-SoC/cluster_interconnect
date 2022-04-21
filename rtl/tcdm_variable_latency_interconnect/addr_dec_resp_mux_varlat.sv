@@ -23,7 +23,6 @@ module addr_dec_resp_mux_varlat #(
   // master side
   input  logic                                  req_i,    // request from this master
   input  logic [$clog2(NumOut)-1:0]             add_i,    // bank selection index to be decoded
-  input  logic                                  wen_i,    // write enable
   input  logic [ReqDataWidth-1:0]               data_i,   // data to be transported to slaves
   output logic                                  gnt_o,    // grant to master
   output logic                                  vld_o,    // read/write response
@@ -39,7 +38,6 @@ module addr_dec_resp_mux_varlat #(
 );
 
 logic valid_inflight_d, valid_inflight_q;
-logic [NumOut-1:0] vld_d, vld_q;
 
 ////////////////////////////////////////////////////////////////////////
 // degenerate case
