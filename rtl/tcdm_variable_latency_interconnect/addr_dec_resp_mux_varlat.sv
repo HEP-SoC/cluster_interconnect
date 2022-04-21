@@ -16,9 +16,7 @@
 module addr_dec_resp_mux_varlat #(
     parameter int unsigned NumOut        = 32,
     parameter int unsigned ReqDataWidth  = 32,
-    parameter int unsigned RespDataWidth = 32,
-    parameter int unsigned RespLat       = 1,    // response latency of slaves
-    parameter bit          BroadCastOn   = 1'b0  // perform broadcast
+    parameter int unsigned RespDataWidth = 32
 ) (
   input  logic                                  clk_i,
   input  logic                                  rst_ni,
@@ -42,8 +40,6 @@ module addr_dec_resp_mux_varlat #(
 
 logic valid_inflight_d, valid_inflight_q;
 logic [NumOut-1:0] vld_d, vld_q;
-
-localparam bit WriteRespOn   = 1'b1;
 
 ////////////////////////////////////////////////////////////////////////
 // degenerate case

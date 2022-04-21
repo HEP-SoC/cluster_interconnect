@@ -58,10 +58,7 @@ for (genvar j = 0; unsigned'(j) < NumIn; j++) begin : gen_inputs
   addr_dec_resp_mux_varlat #(
     .NumOut        ( NumOut        ),
     .ReqDataWidth  ( ReqDataWidth  ),
-    .RespDataWidth ( RespDataWidth ),
-    .RespLat       ( RespLat       ),
-    .BroadCastOn   ( BroadCastOn   ),
-    .WriteRespOn   ( WriteRespOn   )
+    .RespDataWidth ( RespDataWidth )
   ) i_addr_dec_resp_mux (
     .clk_i   ( clk_i      ),
     .rst_ni  ( rst_ni     ),
