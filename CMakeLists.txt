@@ -4,7 +4,7 @@
 # Please retain this header in all redistributions and modifications of the code.
 
 cmake_minimum_required(VERSION 3.25)
-project(simjtag NONE)
+project(cluster_interconnect NONE)
 
 add_ip(cluster_interconnect
     VENDOR pulp_platform
