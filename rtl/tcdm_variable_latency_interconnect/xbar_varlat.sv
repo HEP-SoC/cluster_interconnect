@@ -129,6 +129,7 @@ for (genvar k = 0; unsigned'(k) < NumOut; k++) begin : gen_outputs
   end
 end
 
+// tmrg copy start
 ////////////////////////////////////////////////////////////////////////
 // assertion
 ////////////////////////////////////////////////////////////////////////
@@ -142,5 +143,6 @@ initial begin
 end
 // pragma translate_on
 `endif
+// tmrg copy stop
 
 endmodule // xbar_varlat
