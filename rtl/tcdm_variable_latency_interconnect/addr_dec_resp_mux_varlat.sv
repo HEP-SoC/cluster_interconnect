@@ -41,6 +41,10 @@ module addr_dec_resp_mux_varlat #(
 
 logic valid_inflight_d, valid_inflight_q;
 
+// voted signals for triplication
+wire valid_inflight_qVoted;
+assign valid_inflight_qVoted = valid_inflight_q;
+
 ////////////////////////////////////////////////////////////////////////
 // degenerate case
 ////////////////////////////////////////////////////////////////////////
@@ -49,13 +53,13 @@ if (NumOut == unsigned'(1)) begin : gen_one_output
   assign data_o[0] = data_i;
   assign gnt_o     = gnt_i[0];
   assign rdata_o   = rdata_i[0];
-  assign vld_o     = vld_i[0] & valid_inflight_q;
+  assign vld_o     = vld_i[0] & valid_inflight_qVoted;
 
   // address decoder
   always_comb begin : p_addr_dec
-    valid_inflight_d = valid_inflight_q;
+    valid_inflight_d = valid_inflight_qVoted;
     req_o[0] = '0;
-    if (~valid_inflight_q) begin
+    if (~valid_inflight_qVoted) begin
       req_o[0] = req_i;
       valid_inflight_d = req_i & gnt_o;
     end else begin
@@ -87,8 +91,8 @@ end else begin : gen_several_outputs
   // address decoder
   always_comb begin : p_addr_dec
     req_o = '0;
-    valid_inflight_d = valid_inflight_q;
-    if (~valid_inflight_q) begin
+    valid_inflight_d = valid_inflight_qVoted;
+    if (~valid_inflight_qVoted) begin
       req_o[add_i]     = req_i;
       valid_inflight_d = req_i & gnt_o;
     end else begin
@@ -111,8 +115,12 @@ end else begin : gen_several_outputs
 
   logic [$clog2(NumOut)-1:0] bank_sel_d, bank_sel_q;
 
-  assign rdata_o = rdata_i[bank_sel_q];
-  assign vld_o = vld_i[bank_sel_q] & valid_inflight_q;
+  // voted signals for triplication
+  wire [$clog2(NumOut)-1:0] bank_sel_qVoted;
+  assign bank_sel_qVoted = bank_sel_q;
+
+  assign rdata_o = rdata_i[bank_sel_qVoted];
+  assign vld_o = vld_i[bank_sel_qVoted] & valid_inflight_qVoted;
   assign bank_sel_d = add_i;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin : p_valid_inflight
@@ -123,16 +131,19 @@ end else begin : gen_several_outputs
       valid_inflight_q <= valid_inflight_d;
       if(req_i & gnt_o)
         bank_sel_q <= bank_sel_d;
+      else
+        bank_sel_q <= bank_sel_qVoted;
     end
   end
 
 end
 
-// tmrg copy start
+
 ////////////////////////////////////////////////////////////////////////
 // assertions
 ////////////////////////////////////////////////////////////////////////
 
+// tmrg copy start
 `ifndef SYNTHESIS
 // pragma translate_off
 initial begin
