@@ -3,14 +3,17 @@
 #
 # Please retain this header in all redistributions and modifications of the code.
 
+include("${CMAKE_CURRENT_LIST_DIR}/deps/deps.cmake")
+
 cmake_minimum_required(VERSION 3.25)
 project(cluster_interconnect NONE)
+
 
 add_ip(cluster_interconnect
     VENDOR pulp_platform
     LIBRARY ip
     VERSION 1.2.2
-    )
+)
 
 # ip_include_directories(${IP} SYSTEMVERILOG
 #     ${PROJECT_SOURCE_DIR}/rtl/low_latency_interco
@@ -75,6 +78,6 @@ ip_sources(${IP} SYSTEMVERILOG
     # ${PROJECT_SOURCE_DIR}/rtl/peripheral_interco/XBAR_PE.sv
 )
 
-if(NOT PROJECT_IS_TOP_LEVEL)
-    set(RTL_LIB_NAME ${IP} PARENT_SCOPE)
-endif()
+ip_link(${IP}
+    pulp_platform::ip::common_cells
+)
