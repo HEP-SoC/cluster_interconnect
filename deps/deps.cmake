@@ -14,7 +14,7 @@ CPMAddPackage(
 
 CPMAddPackage(
     NAME rt_utils
-    GIT_TAG v0.0.6
+    GIT_TAG v0.0.7
     GIT_REPOSITORY "ssh://git@gitlab.cern.ch:7999/socrates/ip_blocks/rt-utils.git"
 )
 

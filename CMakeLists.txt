@@ -12,7 +12,7 @@ project(cluster_interconnect NONE)
 add_ip(cluster_interconnect
     VENDOR pulp_platform
     LIBRARY ip
-    VERSION 1.2.2
+    VERSION 0.0.2
 )
 
 # ip_include_directories(${IP} SYSTEMVERILOG
