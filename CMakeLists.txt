@@ -8,6 +8,10 @@ include("${CMAKE_CURRENT_LIST_DIR}/deps/deps.cmake")
 cmake_minimum_required(VERSION 3.25)
 project(cluster_interconnect NONE)
 
+######################################
+#### Cluster Interconnect Vanilla ####
+######################################
+
 
 add_ip(cluster_interconnect
     VENDOR pulp_platform
@@ -20,7 +24,7 @@ add_ip(cluster_interconnect
 #     ${PROJECT_SOURCE_DIR}/rtl/peripheral_interco
 # )
 
-ip_sources(${IP} SYSTEMVERILOG
+set(SV_FILES
     # Source files grouped in levels. Files in level 0 have no dependencies on files in this
     # package. Files in level 1 only depend on files in level 0, files in level 2 on files in
     # levels 1 and 0, etc. Files within a level are ordered alphabetically.
@@ -76,8 +80,35 @@ ip_sources(${IP} SYSTEMVERILOG
     # ${PROJECT_SOURCE_DIR}/rtl/peripheral_interco/ResponseBlock_PE.sv
     # ${PROJECT_SOURCE_DIR}/rtl/peripheral_interco/ResponseTree_PE.sv
     # ${PROJECT_SOURCE_DIR}/rtl/peripheral_interco/XBAR_PE.sv
-)
+
+    )
+ip_sources(${IP} SYSTEMVERILOG ${SV_FILES})
 
 ip_link(${IP}
     pulp_platform::ip::common_cells
 )
+
+######################################
+#### Cluster Interconnect TMR ####
+######################################
+
+
+add_ip(cluster_interconnect
+    VENDOR pulp_platform
+    LIBRARY ip_tmr
+    VERSION 0.0.2
+)
+
+ip_sources(${IP} SYSTEMVERILOG ${SV_FILES})
+
+ip_link(${IP} 
+    pulp_platform::ip_tmr::common_cells
+)
+
+# Set the sources for triplication with TMRG
+set_tmrg_sources(${IP} 
+    ${PROJECT_SOURCE_DIR}/rtl/tcdm_variable_latency_interconnect/addr_dec_resp_mux_varlat.sv
+    ${PROJECT_SOURCE_DIR}/rtl/tcdm_variable_latency_interconnect/xbar_varlat.sv
+)
+
+tmrg(${IP} SED_WOR NO_COMMON_DEFINITIONS REPLACE)
