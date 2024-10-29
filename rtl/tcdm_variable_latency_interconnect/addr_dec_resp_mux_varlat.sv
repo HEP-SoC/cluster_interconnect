@@ -48,6 +48,7 @@ assign valid_inflight_qVoted = valid_inflight_q;
 ////////////////////////////////////////////////////////////////////////
 // degenerate case
 ////////////////////////////////////////////////////////////////////////
+// tmrg ignore start
 if (NumOut == unsigned'(1)) begin : gen_one_output
 
   assign data_o[0] = data_i;
@@ -87,6 +88,7 @@ if (NumOut == unsigned'(1)) begin : gen_one_output
 // normal case
 ////////////////////////////////////////////////////////////////////////
 end else begin : gen_several_outputs
+// tmrg ignore stop
 
   // address decoder
   always_comb begin : p_addr_dec
@@ -136,8 +138,9 @@ end else begin : gen_several_outputs
     end
   end
 
+// tmrg ignore start
 end
-
+// tmrg ignore stop
 
 ////////////////////////////////////////////////////////////////////////
 // assertions
