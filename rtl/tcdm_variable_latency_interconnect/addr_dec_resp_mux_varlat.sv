@@ -45,16 +45,23 @@ logic valid_inflight_d, valid_inflight_q;
 wire valid_inflight_qVoted;
 assign valid_inflight_qVoted = valid_inflight_q;
 
+logic [$clog2(NumOut)-1:0] bank_sel_q; 
+wire [$clog2(NumOut)-1:0] bank_sel_qVoted; 
+assign bank_sel_qVoted = bank_sel_q;
+
 ////////////////////////////////////////////////////////////////////////
 // degenerate case
 ////////////////////////////////////////////////////////////////////////
-// tmrg ignore start
 if (NumOut == unsigned'(1)) begin : gen_one_output
 
   assign data_o[0] = data_i;
   assign gnt_o     = gnt_i[0];
   assign rdata_o   = rdata_i[0];
   assign vld_o     = vld_i[0] & valid_inflight_qVoted;
+  
+  logic [$clog2(NumOut)-1:0] unused_banq_sel_q, unused_banq_sel_qVoted;  
+  assign bank_sel_q = unused_banq_sel_q;
+  assign bank_sel_qVoted = unused_banq_sel_qVoted;
 
   // address decoder
   always_comb begin : p_addr_dec
@@ -88,7 +95,6 @@ if (NumOut == unsigned'(1)) begin : gen_one_output
 // normal case
 ////////////////////////////////////////////////////////////////////////
 end else begin : gen_several_outputs
-// tmrg ignore stop
 
   // address decoder
   always_comb begin : p_addr_dec
@@ -115,11 +121,8 @@ end else begin : gen_several_outputs
 
   assign gnt_o = AggregateGnt == 1 ? |gnt_i : gnt_i[add_i];
 
-  logic [$clog2(NumOut)-1:0] bank_sel_d, bank_sel_q;
+  logic [$clog2(NumOut)-1:0] bank_sel_d;
 
-  // voted signals for triplication
-  wire [$clog2(NumOut)-1:0] bank_sel_qVoted;
-  assign bank_sel_qVoted = bank_sel_q;
 
   assign rdata_o = rdata_i[bank_sel_qVoted];
   assign vld_o = vld_i[bank_sel_qVoted] & valid_inflight_qVoted;
@@ -138,9 +141,7 @@ end else begin : gen_several_outputs
     end
   end
 
-// tmrg ignore start
 end
-// tmrg ignore stop
 
 ////////////////////////////////////////////////////////////////////////
 // assertions
