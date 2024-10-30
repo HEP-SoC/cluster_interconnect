@@ -8,13 +8,13 @@ include(${CMAKE_CURRENT_LIST_DIR}/CPM.cmake)
 
 CPMAddPackage(
     NAME SoCMake
-    GIT_TAG v0.2.7
+    GIT_TAG v0.2.16
     GIT_REPOSITORY "https://github.com/HEP-SoC/SoCMake.git"
 )
 
 CPMAddPackage(
     NAME rt_utils
-    GIT_TAG v0.0.7
+    GIT_TAG v0.0.9
     GIT_REPOSITORY "ssh://git@gitlab.cern.ch:7999/socrates/ip_blocks/rt-utils.git"
 )
 
