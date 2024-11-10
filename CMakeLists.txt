@@ -8,6 +8,8 @@ include("${CMAKE_CURRENT_LIST_DIR}/deps/deps.cmake")
 cmake_minimum_required(VERSION 3.25)
 project(cluster_interconnect NONE)
 
+set(CLUSTER_INTERCONNECT_VERSION 0.0.3 CACHE INTERNAL "Version of the cluster_interconnect IP")
+
 ######################################
 #### Cluster Interconnect Vanilla ####
 ######################################
@@ -16,7 +18,7 @@ project(cluster_interconnect NONE)
 add_ip(cluster_interconnect
     VENDOR pulp_platform
     LIBRARY ip
-    VERSION 0.0.2
+    VERSION ${CLUSTER_INTERCONNECT_VERSION}
 )
 
 # ip_include_directories(${IP} SYSTEMVERILOG
@@ -96,7 +98,7 @@ ip_link(${IP}
 add_ip(cluster_interconnect
     VENDOR pulp_platform
     LIBRARY ip_tmr
-    VERSION 0.0.2
+    VERSION ${CLUSTER_INTERCONNECT_VERSION}
 )
 
 ip_sources(${IP} SYSTEMVERILOG ${SV_FILES})
