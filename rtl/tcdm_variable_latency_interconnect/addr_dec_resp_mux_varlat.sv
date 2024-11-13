@@ -40,10 +40,11 @@ module addr_dec_resp_mux_varlat #(
 );
 
 logic valid_inflight_d, valid_inflight_q;
+wire valid_inflight_qVoted = valid_inflight_q;
 
-// voted signals for triplication
-wire valid_inflight_qVoted;
-assign valid_inflight_qVoted = valid_inflight_q;
+localparam BANK_SEL_WIDTH = NumOut > 1 ? ($clog2(NumOut) - 1) : 0;
+logic [BANK_SEL_WIDTH:0] bank_sel_q;
+wire [BANK_SEL_WIDTH:0] bank_sel_qVoted = bank_sel_q;
 
 logic [$clog2(NumOut)-1:0] bank_sel_q; 
 wire [$clog2(NumOut)-1:0] bank_sel_qVoted; 
@@ -58,10 +59,7 @@ if (NumOut == unsigned'(1)) begin : gen_one_output
   assign gnt_o     = gnt_i[0];
   assign rdata_o   = rdata_i[0];
   assign vld_o     = vld_i[0] & valid_inflight_qVoted;
-  
-  logic [$clog2(NumOut)-1:0] unused_banq_sel_q, unused_banq_sel_qVoted;  
-  assign bank_sel_q = unused_banq_sel_q;
-  assign bank_sel_qVoted = unused_banq_sel_qVoted;
+  assign bank_sel_q = '0;
 
   // address decoder
   always_comb begin : p_addr_dec
