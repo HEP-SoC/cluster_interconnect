@@ -38,6 +38,8 @@ module addr_dec_resp_mux_varlat #(
   output logic [NumOut-1:0][ReqDataWidth-1:0]   data_o,   // data to be transported to slaves
   input  logic [NumOut-1:0][RespDataWidth-1:0]  rdata_i   // read responses from slaves
 );
+// tmrg default triplicate
+// tmrg tmr_error true
 
 logic valid_inflight_d, valid_inflight_q;
 wire valid_inflight_qVoted = valid_inflight_q;
@@ -45,10 +47,6 @@ wire valid_inflight_qVoted = valid_inflight_q;
 localparam BANK_SEL_WIDTH = NumOut > 1 ? ($clog2(NumOut) - 1) : 0;
 logic [BANK_SEL_WIDTH:0] bank_sel_q;
 wire [BANK_SEL_WIDTH:0] bank_sel_qVoted = bank_sel_q;
-
-logic [$clog2(NumOut)-1:0] bank_sel_q; 
-wire [$clog2(NumOut)-1:0] bank_sel_qVoted; 
-assign bank_sel_qVoted = bank_sel_q;
 
 ////////////////////////////////////////////////////////////////////////
 // degenerate case

@@ -43,7 +43,8 @@ module xbar_varlat #(
   /* verilator lint_on UNOPTFLAT */
   input  logic [NumOut-1:0][RespDataWidth-1:0]  rdata_i    // data response (for load commands)
 );
-
+  // tmrg default triplicate
+  // tmrg tmr_error true
 
 /*
   (*):
@@ -108,6 +109,12 @@ for (genvar k = 0; unsigned'(k) < NumOut; k++) begin : gen_outputs
     assign req_o[k]      = sl_req[k][0];
     assign sl_gnt[k][0]  = gnt_i[k];
     assign wdata_o[k]    = sl_data[k][0];
+`ifdef TMRG
+    // Default assignment for tmrError signals of instances in the 'else' branch
+    assign i_rr_arb_treetmrErrorA = '0;
+    assign i_rr_arb_treetmrErrorB = '0;
+    assign i_rr_arb_treetmrErrorC = '0;
+`endif
   end else begin : gen_rr_arb_tree
     rr_arb_tree #(
       .NumIn     ( NumIn        ),
