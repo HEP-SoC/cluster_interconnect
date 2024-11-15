@@ -19,7 +19,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/CPM.cmake)
 
 CPMAddPackage(
     NAME SoCMake
-    GIT_TAG tmrg_fix
+    GIT_TAG v0.2.17
     GIT_REPOSITORY "https://github.com/HEP-SoC/SoCMake.git"
 )
 
@@ -32,6 +32,6 @@ CPMAddPackage(
 CPMAddPackage(
     NAME common_cells
     # On socmake branch
-    GIT_TAG v0.0.3
+    GIT_TAG v0.0.5
     GIT_REPOSITORY "https://github.com/HEP-SoC/common_cells.git"
 )
