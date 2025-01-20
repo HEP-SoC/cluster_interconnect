@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-only
-# Copyright (c) 2023 CERN
+# Copyright (c) 2025 CERN
 #
 # Please retain this header in all redistributions and modifications of the code.
 
@@ -103,12 +103,12 @@ add_ip(cluster_interconnect
 
 ip_sources(${IP} SYSTEMVERILOG ${SV_FILES})
 
-ip_link(${IP} 
+ip_link(${IP}
     pulp_platform::ip_tmr::common_cells
 )
 
 # Set the sources for triplication with TMRG
-set_tmrg_sources(${IP} 
+set_tmrg_sources(${IP}
     ${PROJECT_SOURCE_DIR}/rtl/tcdm_variable_latency_interconnect/addr_dec_resp_mux_varlat.sv
     ${PROJECT_SOURCE_DIR}/rtl/tcdm_variable_latency_interconnect/xbar_varlat.sv
 )
